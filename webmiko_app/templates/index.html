@@ -6,27 +6,14 @@
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function() {
-            // Use a "/test" namespace.
-            // An application can open a connection on multiple namespaces, and
-            // Socket.IO will multiplex all those connections on a single
-            // physical channel. If you don't care about multiple channels, you
-            // can set the namespace to an empty string.
             namespace = '/test';
-            // Connect to the Socket.IO server.
-            // The connection URL has the following format:
-            //     http[s]://<domain>:<port>[/<namespace>]
+
             var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
-            // Event handler for new connections.
-            // The callback function is invoked when a connection with the
-            // server is established.
+
             socket.on('connect', function() {
-            	//alert('Connected to server!')
                 socket.emit('my_event', {data: 'I\'m connected!'});
             });
-            // Event handler for server sent data.
-            // The callback function is invoked whenever the server emits data
-            // to the client. The data is then displayed in the "Received"
-            // section of the page.
+
             socket.on('my_response', function(msg) {
             	//alert('Data received!')
                 $('#log').append('<br>' + $('<div/>').text('Received #' + msg.count + ': ' + msg.data).html());
@@ -36,9 +23,7 @@
             // These accept data from the user and send it to the server in a
             // variety of ways
             $('form#emit').submit(function(event) {
-                //socket.emit('my_event', {data: $('#emit_data').val()});
-                socket.emit('my_event', {data: 'test data');
-                alert('Data sent!')
+                socket.emit('my_event', {data: $('#emit_data').val()});
                 return false;
             });
         });

@@ -17,24 +17,22 @@ def background_thread():
         socketio.emit('my_response',
                       {'data': 'Server generated event', 'count': count},
                       namespace='/test')
+def start_background_thread():
+    global thread
+    with thread_lock:
+        if thread is None:
+            thread = socketio.start_background_task(target=background_thread)
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
-@socketio.on('my event', namespace='/test')
+@socketio.on('my_event', namespace='/test')
 def test_message(message):
-    print('received')
-    emit('my response', {'data': message['data']})
+    emit('my_response', {'data': message['data'], 'count': 123})
 
 @socketio.on('connect', namespace='/test')
 def test_connect():
-    print('Connected!')
-    emit('my response', {'data': 'Connected'})
-    global thread
-    with thread_lock:
-        if thread is None:
-            thread = socketio.start_background_task(target=background_thread)
     emit('my_response', {'data': 'Connected', 'count': 0})
 
 @socketio.on('disconnect', namespace='/test')
