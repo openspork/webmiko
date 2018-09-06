@@ -22,6 +22,7 @@ def test_message(message):
 @socketio.on('connect', namespace='/test')
 def test_connect():
     print('Client connected')
+    start_background_thread()
     emit('server_ack', {'data': 'Connected', 'count': 0})
 
 @socketio.on('disconnect', namespace='/test')
@@ -35,7 +36,7 @@ def background_thread():
     """Example of how to send server generated events to clients."""
     count = 0
     while True:
-        socketio.sleep(10)
+        socketio.sleep(1)
         count += 1
         print(count)
         socketio.emit('server_ack',
