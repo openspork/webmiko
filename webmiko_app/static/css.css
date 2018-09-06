@@ -1,0 +1,51 @@
+body {
+    background-color: powderblue;
+}
+
+div {
+	box-sizing: border-box;
+	border-width: 1px;
+	border-style: solid;
+	border-color: black;
+}
+
+table {
+	margin: auto;
+	width: 95%;
+}
+
+tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
+
+#console_input {
+	color: white;
+	display: block;
+	margin: auto;
+	width: 95%;
+	background-color: black;
+}
+
+#query_button {
+
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+#config_button {
+	float: right;
+    background-color: red;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
