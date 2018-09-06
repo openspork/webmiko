@@ -7,7 +7,7 @@ $(document).ready(function() {
         socket.emit('my_event', {data: 'I\'m connected!'});
     });
 
-    socket.on('server_ack', function(msg) {
+    socket.on('server_heartbeat', function(msg) {
         $('#log').append('<br>' + $('<div/>').text('Received #' + msg.count + ': ' + msg.data).html());
     });
 
