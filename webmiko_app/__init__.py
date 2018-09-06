@@ -6,15 +6,15 @@ db.create_tables([Var, GlobalVar, Device, DeviceVar, LiveCommand, FavCommand], s
 
 app = Flask(__name__)
 
-@app.before_request
-def _db_connect():
-	db.connect()
+# Not required for SQLite
+# @app.before_request
+# def _db_connect():
+# 	db.connect()
 
 @app.teardown_request
 def _db_close(exc):
 	if not db.is_closed():
 		db.close()
-
 
 app.config['SECRET_KEY'] = 'SECRET_KEY'
 

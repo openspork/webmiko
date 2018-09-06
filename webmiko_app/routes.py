@@ -12,17 +12,17 @@ thread_lock = Lock()
 @socketio.on('query', namespace='/test')
 def test_message(message):
     print('Query sent!')
-    emit('my_response', {'data': message['data'], 'count': 123})
+    emit('server_ack', {'data': message['data'], 'count': 123})
 
 @socketio.on('config', namespace='/test')
 def test_message(message):
     print('Config sent!')
-    emit('my_response', {'data': message['data'], 'count': 123})
+    emit('server_ack', {'data': message['data'], 'count': 123})
 
 @socketio.on('connect', namespace='/test')
 def test_connect():
     print('Client connected')
-    emit('my_response', {'data': 'Connected', 'count': 0})
+    emit('server_ack', {'data': 'Connected', 'count': 0})
 
 @socketio.on('disconnect', namespace='/test')
 def test_disconnect():
@@ -38,7 +38,7 @@ def background_thread():
         socketio.sleep(10)
         count += 1
         print(count)
-        socketio.emit('my_response',
+        socketio.emit('server_ack',
                       {'data': 'Server generated event', 'count': count},
                       namespace='/test')
 def start_background_thread():
