@@ -26,8 +26,8 @@ tr:nth-child(even) {
 	background-color: black;
 }
 
-#query_button {
-
+.safe_button {
+    float: left;
     background-color: #4CAF50; /* Green */
     border: none;
     color: white;
@@ -38,7 +38,7 @@ tr:nth-child(even) {
     font-size: 16px;
 }
 
-#config_button {
+.danger_button {
 	float: right;
     background-color: red;
     border: none;

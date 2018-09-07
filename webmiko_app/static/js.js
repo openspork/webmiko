@@ -1,3 +1,20 @@
+data = [
+    {title: "sw1_24p", folder: true, children: [
+        {title: "$password=P@ss1234"},
+        {title: "$user=manager"},
+        {title: "$ip=10.0.0.10"},
+        {title: "$trunk1=1,24"},
+    ]},
+    {title: "sw2_48p", folder: true, children: [
+        {title: "$password=P@ss1234"},
+        {title: "$user=manager"},
+        {title: "$ip=10.0.0.11"},
+        {title: "$trunk=47-48"}
+    ]},
+    ]
+
+
+
 $(document).ready(function() {
     namespace = '/test';
 
@@ -26,5 +43,34 @@ $(document).ready(function() {
             }
         } else { alert('No config to send!') }
     });
+
+    $("#submit_tree_button").click(function(event){
+        if (confirm('Commit current tree?')) {
+            var tree = $("#tree").fancytree("getTree");
+            var tree_dict = tree.toDict(true);
+            alert(JSON.stringify(tree_dict));
+            socket.emit('inventory', {data: tree_dict})
+        }        
+    });
+
     
+    $("#tree").fancytree({
+        checkbox: true,
+        source: data,
+        extensions: ["edit"],
+        edit: {
+        // Available options with their default:
+        adjustWidthOfs: 4,   // null: don't adjust input size to content
+        inputCss: { minWidth: "3em" },
+        triggerStart: ["clickActive", "f2", "dblclick", "shift+click", "mac+enter"],
+        beforeEdit: $.noop,   // Return false to prevent edit mode
+        edit: $.noop,         // Editor was opened (available as data.input)
+        beforeClose: $.noop,  // Return false to prevent cancel/save (data.input is available)
+        save: $.noop,         // Save data.input.val() or return false to keep editor open
+        close: $.noop,        // Editor was removed
+        }
+    });
+
+
+
 });
