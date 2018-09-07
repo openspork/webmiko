@@ -25,7 +25,6 @@ $(document).ready(function() {
     socket.on('heartbeat', function(msg) {
         heatbeat_time = Date(msg.datetime)
         $('#heartbeat').text('Received #' + msg.count + ': ' + heatbeat_time);
-        console.log(Date(heatbeat_time = Date(msg.data)))
     });
 
     socket.on('log', function(msg) {
