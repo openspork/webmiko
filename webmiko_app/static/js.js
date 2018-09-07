@@ -63,6 +63,7 @@ $(document).ready(function() {
     });
 
     $("#tree").fancytree({
+        minExpandLevel: 2,
         checkbox: true,
         source: data,
         extensions: ["edit"],
