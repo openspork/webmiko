@@ -13,8 +13,6 @@ data = [
     ]},
     ]
 
-var tree_dict
-
 $(document).ready(function() {
     namespace = '/test';
 
@@ -53,11 +51,9 @@ $(document).ready(function() {
     });
 
     socket.on('inventory', function(msg) {
-        msg_json = JSON.stringify(msg.data)
-        if (msg.data == tree_dict) { alert('Tree update success!') }
+        alert('Inventory update: ' + msg.data)
     });
 
-    
     $("#tree").fancytree({
         checkbox: true,
         source: data,

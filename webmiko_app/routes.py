@@ -23,15 +23,8 @@ def test_message(message):
 @socketio.on('inventory', namespace='/test')
 def test_message(message):
     print('Inventory received!')
-    emit('inventory', {'data': message['data'], 'count': 123})
     print(message['data'])
-
-
-
-
-
-
-
+    emit('inventory', {'data': 'success'})
 
 
 @socketio.on('connect', namespace='/test')
