@@ -22,8 +22,12 @@ $(document).ready(function() {
         socket.emit('my_event', {data: 'I\'m connected!'});
     });
 
-    socket.on('server_heartbeat', function(msg) {
-        $('#log').append('<br>' + $('<div/>').text('Received #' + msg.count + ': ' + msg.data).html());
+    socket.on('heartbeat', function(msg) {
+        $('#heartbeat').text('Received #' + msg.count + ': ' + msg.data);
+    });
+
+    socket.on('log', function(msg) {
+        $('#log').append('<br>' + $('<div/>').text('Received ' + msg.type + ': ' + msg.data).html());
     });
 
     $('#query_button').click(function(event) {

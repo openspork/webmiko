@@ -12,12 +12,12 @@ thread_lock = Lock()
 @socketio.on('query', namespace='/test')
 def test_message(message):
     print('Query received!')
-    emit('server_heartbeat', {'data': message['data'], 'count': 123})
+    emit('log', {'data': message['data'], 'type': 'query'})
 
 @socketio.on('config', namespace='/test')
 def test_message(message):
     print('Config received!')    
-    emit('server_heartbeat', {'data': message['data'], 'count': 123})
+    emit('log', {'data': message['data'], 'type': 'config'})
     
 
 @socketio.on('inventory', namespace='/test')
@@ -37,13 +37,26 @@ def test_connect():
 def test_disconnect():
     print('Client disconnected')
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 def heartbeat_thread():
     """Example of how to send server generated events to clients."""
     count = 0
     while True:
         socketio.sleep(1)
         count += 1
-        socketio.emit('server_heartbeat',
+        socketio.emit('heartbeat',
                       {'data': 'Server generated event', 'count': count},
                       namespace='/test')
 def start_heartbeat_thread():
