@@ -13,7 +13,7 @@ data = [
     ]},
     ]
 
-
+var tree_dict
 
 $(document).ready(function() {
     namespace = '/test';
@@ -48,9 +48,13 @@ $(document).ready(function() {
         if (confirm('Commit current tree?')) {
             var tree = $("#tree").fancytree("getTree");
             var tree_dict = tree.toDict(true);
-            alert(JSON.stringify(tree_dict));
             socket.emit('inventory', {data: tree_dict})
-        }        
+        }       
+    });
+
+    socket.on('inventory', function(msg) {
+        msg_json = JSON.stringify(msg.data)
+        if (msg.data == tree_dict) { alert('Tree update success!') }
     });
 
     

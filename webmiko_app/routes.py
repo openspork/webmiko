@@ -16,14 +16,15 @@ def test_message(message):
 
 @socketio.on('config', namespace='/test')
 def test_message(message):
-    print('Inventory sent!')
+    print('Config received!')    
     emit('server_heartbeat', {'data': message['data'], 'count': 123})
+    
 
 @socketio.on('inventory', namespace='/test')
 def test_message(message):
-    print('Config received!')
-    emit('server_heartbeat', {'data': message['data'], 'count': 123})
-
+    print('Inventory received!')
+    emit('inventory', {'data': message['data'], 'count': 123})
+    print(message['data'])
 
 
 
