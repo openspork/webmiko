@@ -1,4 +1,7 @@
 from threading import Lock
+from time import mktime
+from datetime import datetime, timezone
+
 from flask import render_template, send_from_directory
 from webmiko_app import app, socketio
 from flask_socketio import emit, join_room, leave_room, close_room, rooms, disconnect
@@ -39,26 +42,19 @@ def test_disconnect():
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 def heartbeat_thread():
     """Example of how to send server generated events to clients."""
     count = 0
     while True:
         socketio.sleep(1)
         count += 1
+        utc_datetime = datetime.now(timezone.utc)
+        utc_datetime_for_js = int(mktime(utc_datetime.timetuple())) * 1000
         socketio.emit('heartbeat',
-                      {'data': 'Server generated event', 'count': count},
+                      {'datetime': utc_datetime_for_js, 'count': count},
                       namespace='/test')
+
+
 def start_heartbeat_thread():
     global thread
     with thread_lock:

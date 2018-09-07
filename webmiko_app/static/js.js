@@ -23,7 +23,9 @@ $(document).ready(function() {
     });
 
     socket.on('heartbeat', function(msg) {
-        $('#heartbeat').text('Received #' + msg.count + ': ' + msg.data);
+        heatbeat_time = Date(msg.datetime)
+        $('#heartbeat').text('Received #' + msg.count + ': ' + heatbeat_time);
+        console.log(Date(heatbeat_time = Date(msg.data)))
     });
 
     socket.on('log', function(msg) {
@@ -34,7 +36,7 @@ $(document).ready(function() {
         if ($('#console_input').val()) {
             socket.emit('query', {data: $('#console_input').val()});
             $('#console_input').val('')
-        } else { alert('No config to send!') }
+        } else { alert('No query to send!') }
     });
 
     $('#config_button').click(function(event) {
