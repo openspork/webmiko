@@ -1,17 +1,20 @@
 data = [
-{title: "sw1_24p", folder: true, children: [
-{title: "$password=P@ss1234"},
-{title: "$user=manager"},
-{title: "$ip=10.0.0.10"},
-{title: "$trunk1=1,24"},
-]},
-{title: "sw2_48p", folder: true, children: [
-{title: "$password=P@ss1234"},
-{title: "$user=manager"},
-{title: "$ip=10.0.0.11"},
-{title: "$trunk=47-48"}
-]},
+{title: "All Assets", folder: true, children: [
+        {title: "sw1_24p", folder: true, children: [
+            {title: "$password=P@ss1234"},
+            {title: "$user=manager"},
+            {title: "$ip=10.0.0.10"},
+            {title: "$trunk1=1,24"},
+        ]},
+        {title: "sw2_48p", folder: true, children: [
+            {title: "$password=P@ss1234"},
+            {title: "$user=manager"},
+            {title: "$ip=10.0.0.11"},
+            {title: "$trunk=47-48"}
+        ]},
+    ]}
 ]
+
 
 $(document).ready(function() {
     namespace = '/test';
