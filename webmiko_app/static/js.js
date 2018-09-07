@@ -1,17 +1,17 @@
 data = [
-    {title: "sw1_24p", folder: true, children: [
-        {title: "$password=P@ss1234"},
-        {title: "$user=manager"},
-        {title: "$ip=10.0.0.10"},
-        {title: "$trunk1=1,24"},
-    ]},
-    {title: "sw2_48p", folder: true, children: [
-        {title: "$password=P@ss1234"},
-        {title: "$user=manager"},
-        {title: "$ip=10.0.0.11"},
-        {title: "$trunk=47-48"}
-    ]},
-    ]
+{title: "sw1_24p", folder: true, children: [
+{title: "$password=P@ss1234"},
+{title: "$user=manager"},
+{title: "$ip=10.0.0.10"},
+{title: "$trunk1=1,24"},
+]},
+{title: "sw2_48p", folder: true, children: [
+{title: "$password=P@ss1234"},
+{title: "$user=manager"},
+{title: "$ip=10.0.0.11"},
+{title: "$trunk=47-48"}
+]},
+]
 
 $(document).ready(function() {
     namespace = '/test';
@@ -52,7 +52,7 @@ $(document).ready(function() {
         if (confirm('Commit current tree?')) {
             var tree = $("#tree").fancytree("getTree");
             var tree_dict = tree.toDict(true);
-            socket.emit('inventory', {data: tree_dict})
+            socket.emit('inventory', {data: tree_dict});
         }       
     });
 
@@ -74,8 +74,15 @@ $(document).ready(function() {
         beforeClose: $.noop,  // Return false to prevent cancel/save (data.input is available)
         save: $.noop,         // Save data.input.val() or return false to keep editor open
         close: $.noop,        // Editor was removed
-        }
-    });
+    },
+    select: function(event, data) {
+        var node = data.node;
+        selected = node.isSelected(); // Get the selected state of the selected node
+            node.visit(function(childNode) {
+                childNode.setSelected(selected); // apply the selected state to all children
+            });
+    }
+});
 
 
 
