@@ -7,6 +7,7 @@ div {
 	border-width: 1px;
 	border-style: solid;
 	border-color: black;
+    overflow: auto;
 }
 
 table {
@@ -16,6 +17,10 @@ table {
 
 tr:nth-child(even) {
 	background-color: #f2f2f2;
+}
+
+#devices {
+
 }
 
 #console_input {
