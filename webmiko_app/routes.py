@@ -1,34 +1,46 @@
 from threading import Lock
 from time import mktime
 from datetime import datetime, timezone
-
 from flask import render_template, send_from_directory
-from webmiko_app import app, socketio
 from flask_socketio import emit, join_room, leave_room, close_room, rooms, disconnect
+
+from webmiko_app import app, socketio
+from utils.utils import js_hashcode
+
 
 thread = None
 thread_lock = Lock()
 
-
-
-
-@socketio.on('query', namespace='/test')
-def test_message(message):
-    print('Query received!')
-    emit('log', {'data': message['data'], 'type': 'query'})
-
-@socketio.on('config', namespace='/test')
-def test_message(message):
-    print('Config received!')    
-    emit('log', {'data': message['data'], 'type': 'config'})
-    
-
+# Process inventory update
 @socketio.on('inventory', namespace='/test')
 def test_message(message):
     print('Inventory received!')
     print(message['data'])
     emit('inventory', {'data': 'success'})
 
+# Process query submission
+@socketio.on('query_req', namespace='/test')
+def answer_query(message):
+    query = message['query']
+    hash = int(message['hash'])
+    result = '<query result>'
+    # Recompute query's hash and make sure it is correct
+    if hash == js_hashcode(query):
+        response = { 'hash': hash,'code': 0, 'result': result}
+    else:
+        response = { 'hash': hash, 'code': 1, 'result': result}
+
+    print('Query response:' + str(response))
+    emit('query_resp', response)
+
+
+
+
+
+@socketio.on('config', namespace='/test')
+def test_message(message):
+    print('Config received!')    
+    emit('log', {'data': message['data'], 'type': 'config'})
 
 @socketio.on('connect', namespace='/test')
 def test_connect():

@@ -15,13 +15,15 @@ data = [
     ]}
 ]
 
-function guid() {
-  function s4() {
-    return Math.floor((1 + Math.random()) * 0x10000)
-      .toString(16)
-      .substring(1);
-  }
-  return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+String.prototype.hashCode = function(){
+    var hash = 0;
+    if (this.length == 0) return hash;
+    for (i = 0; i < this.length; i++) {
+        char = this.charCodeAt(i);
+        hash = ((hash<<5)-hash)+char;
+        hash = hash & hash; // Convert to 32bit integer
+    }
+    return hash;
 }
 
 $(document).ready(function() {
@@ -42,12 +44,38 @@ $(document).ready(function() {
         $('#log').append('<br>' + $('<div/>').text('Received ' + msg.type + ': ' + msg.data).html());
     });
 
+    // Send queries
     $('#query_button').click(function(event) {
-        if ($('#console_input').val()) {
-            socket.emit('query', {data: $('#console_input').val()});
+        query = $('#console_input').val()
+        if (query) {
+            hash = query.hashCode()
+
+            // Check if the hash (submission) has already been sent and move in query log table
+            socket.emit('query_req', {query: query, hash: hash});
             $('#console_input').val('')
+            $('#query_log tr:last').after(`
+                <tr id = ${hash}>
+                    <td>${hash}</td>
+                    <td>${query}</td>
+                    <td id='${hash}_result''>?</td>
+                    <td><button>Fav.</button></td> 
+                </tr>
+                `);
+
         } else { alert('No query to send!') }
     });
+
+    // Handle query
+    socket.on('query_resp', function(msg) {
+        hash = msg.hash
+        code = msg.code
+        result = msg.result
+        $(`#${hash}_result`).text(result);
+    });
+
+
+
+
 
     $('#config_button').click(function(event) {
         if ($('#console_input').val()) {
@@ -93,8 +121,5 @@ $(document).ready(function() {
                 childNode.setSelected(selected); // apply the selected state to all children
             });
     }
-});
-
-
-
+    });
 });
