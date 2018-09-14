@@ -15,7 +15,7 @@ data = [
     ]}
 ]
 
-function guid() {
+function genGuid() {
   function s4() {
     return Math.floor((1 + Math.random()) * 0x10000)
       .toString(16)
@@ -55,17 +55,19 @@ $(document).ready(function() {
 
     // Send queries
     $('#query_button').click(function(event) {
-        query = $('#console_input').val()
-        if (query) {
-            hash = query.hashCode()
+        queryCmd = $('#console_input').val()
+        if (queryCmd) {
+            hash = queryCmd.hashCode()
+            guid = genGuid()
+            query = {query: queryCmd, hash: hash, guid: guid}
 
-            socket.emit('query_req', {query: query, hash: hash});
+            socket.emit('query_req', query);
             $('#console_input').val('')
             $('#query_log').prepend(`
-                <tr class=${hash}_tr>
+                <tr class=${guid}_tr>
                     <td>${hash}</td>
-                    <td>${query}</td>
-                    <td id='${hash}_result''>?</td>
+                    <td>${queryCmd}</td>
+                    <td id='${guid}_result''>?</td>
                     <td><button>Fav.</button></td> 
                 </tr>
                 `);
@@ -76,9 +78,10 @@ $(document).ready(function() {
     // Handle query response
     socket.on('query_resp', function(msg) {
         hash = msg.hash
+        guid = msg.guid
         code = msg.code
         result = msg.result
-        $(`#${hash}_result`).text(result);
+        $(`#${guid}_result`).text(result);
     });
 
 

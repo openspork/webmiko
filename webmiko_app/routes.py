@@ -23,12 +23,13 @@ def test_message(message):
 def answer_query(message):
     query = message['query']
     hash = int(message['hash'])
+    guid = message['guid']
     result = '<query result>'
     # Recompute query's hash and make sure it is correct
     if hash == js_hashcode(query):
-        response = { 'hash': hash,'code': 0, 'result': result}
+        response = { 'hash': hash,'code': 0, 'guid': guid, 'result': result}
     else:
-        response = { 'hash': hash, 'code': 1, 'result': result}
+        response = { 'hash': hash, 'code': 1, 'guid': guid, 'result': result}
 
     print('Query response:' + str(response))
     emit('query_resp', response)
