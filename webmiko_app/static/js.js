@@ -50,11 +50,10 @@ $(document).ready(function() {
         if (query) {
             hash = query.hashCode()
 
-            // Check if the hash (submission) has already been sent and move in query log table
             socket.emit('query_req', {query: query, hash: hash});
             $('#console_input').val('')
-            $('#query_log').append(`
-                <tr id = ${hash}>
+            $('#query_log').prepend(`
+                <tr class=${hash}_tr>
                     <td>${hash}</td>
                     <td>${query}</td>
                     <td id='${hash}_result''>?</td>
@@ -65,7 +64,7 @@ $(document).ready(function() {
         } else { alert('No query to send!') }
     });
 
-    // Handle query
+    // Handle query response
     socket.on('query_resp', function(msg) {
         hash = msg.hash
         code = msg.code
