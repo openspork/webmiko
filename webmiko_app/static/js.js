@@ -53,7 +53,7 @@ $(document).ready(function() {
             // Check if the hash (submission) has already been sent and move in query log table
             socket.emit('query_req', {query: query, hash: hash});
             $('#console_input').val('')
-            $('#query_log tr:last').after(`
+            $('#query_log').append(`
                 <tr id = ${hash}>
                     <td>${hash}</td>
                     <td>${query}</td>
