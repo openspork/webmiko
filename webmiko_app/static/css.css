@@ -15,12 +15,18 @@ table {
 	width: 95%;
 }
 
+table thead tr {
+    background-color: blue;
+    color: white;
+}
+
 table tbody tr:nth-child(even) {
 	background-color: white;
 }
 
 table tbody tr:nth-child(odd) {
     background-color: grey;
+    color: white;
 }
 
 #console_input {
