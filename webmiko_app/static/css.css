@@ -2,14 +2,6 @@ body {
     background-color: powderblue;
 }
 
-h1 {
-    text-align: center;
-}
-
-h2 {
-    text-align: center;
-} 
-
 div {
 	box-sizing: border-box;
 	border-width: 1px;

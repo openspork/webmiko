@@ -65,8 +65,10 @@ $(document).ready(function() {
             $('#console_input').val('')
             $('#query_log').prepend(`
                 <tr class=${guid}_tr>
+                    <td>${hash}</td>
                     <td>${queryCmd}</td>
                     <td id='${guid}_result''>?</td>
+                    <td><button>Fav.</button></td> 
                 </tr>
                 `);
 
