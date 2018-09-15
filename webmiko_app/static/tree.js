@@ -15,6 +15,17 @@ data = [
     ]}
 ]
 
+// Blank node
+      var newDevice = [
+        { title: "device_name", folder: true,
+          children: [
+            { title: "$password=" },
+            { title: "$user="},
+            { title: "$ip="},
+            { title: "$trunk=48" }
+          ]}
+      ];
+
 $(document).ready(function() {
     $("#tree").fancytree({
         minExpandLevel: 2,
@@ -31,13 +42,24 @@ $(document).ready(function() {
         beforeClose: $.noop,  // Return false to prevent cancel/save (data.input is available)
         save: $.noop,         // Save data.input.val() or return false to keep editor open
         close: $.noop,        // Editor was removed
-    },
-    select: function(event, data) {
-        var node = data.node;
-        selected = node.isSelected(); // Get the selected state of the selected node
+        },
+        select: function(event, data) {
+            var node = data.node;
+            selected = node.isSelected(); // Get the selected state of the selected node
             node.visit(function(childNode) {
                 childNode.setSelected(selected); // apply the selected state to all children
             });
-    }
+        }
     });
+
+    $("#add_tree_node_button").click(function(event){
+        rootNode = $("#tree").fancytree("getRootNode");
+        rootNode.addChildren(newDevice);
+    });
+
+
+
+
+
+
 });
