@@ -53,8 +53,10 @@ $(document).ready(function() {
     });
 
     $("#add_tree_node_button").click(function(event){
-        rootNode = $("#tree").fancytree("getRootNode");
-        rootNode.addChildren(newDevice);
+        //rootNode = $("#tree").fancytree("getRootNode");
+        //rootNode.addChildren(newDevice);
+        allAssetNode = $("#tree").fancytree('getNodeByKey','_1');
+        allAssetNode.addChildren(newDevice);
     });
 
 
