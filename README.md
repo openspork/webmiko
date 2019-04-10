@@ -1,4 +1,4 @@
-# Webmiko is a web GUI for Netmiko, a Python module that issues commands to SSH network equipment using the Python Paramiko module
+# Webmiko is a dynamic websocket/JS based web GUI for Netmiko, a Python module that issues commands to SSH network equipment using the Python Paramiko module
 
 ## Features
 * Device library, each which can be assigned arbitrary variables -- think username, password, IP address, port numbers, etc.
