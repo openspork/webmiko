@@ -21,27 +21,22 @@ def test_message(message):
     payload = message['data']
 
     # Unpack the outer layers of the package to get to the children (assets) we care about
+    # It would be more elegant to have utility method that unpacks but this works for now
     children = payload.get('children')[0].get('children')
 
     # Dump each asset to DB
     for child in children:
         name = child.get('title')
+        print(name)
         device = Device.create(name = name)
         var_defs = child.get('children')
         for var_def in var_defs:
-            for key, value in var_def.items():
-                DeviceVar.create(device = device, key = key, value = value)
-
-        
-
-
-
-
-
+            pair_string = var_def.get('title')
+            pair_list = pair_string.split('=')
+            key = pair_list[0]
+            value = pair_list[1]
+            DeviceVar.create(device = device, key = key, value = value)
     
-
-
-
     emit('inventory', {'data': 'success'})
 
 # Process query submission
