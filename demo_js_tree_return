@@ -1,0 +1,61 @@
+{
+    "children": [
+        {
+            "children": [
+                {
+                    "children": [
+                        {
+                            "key": "_3",
+                            "title": "$password=P@ss1234"
+                        },
+                        {
+                            "key": "_4",
+                            "title": "$user=manager"
+                        },
+                        {
+                            "key": "_5",
+                            "title": "$ip=10.0.0.10"
+                        },
+                        {
+                            "key": "_6",
+                            "title": "$trunk1=1,24"
+                        }
+                    ],
+                    "folder": true,
+                    "key": "_2",
+                    "title": "sw1_24p"
+                },
+                {
+                    "children": [
+                        {
+                            "key": "_8",
+                            "title": "$password=P@ss1234"
+                        },
+                        {
+                            "key": "_9",
+                            "title": "$user=manager"
+                        },
+                        {
+                            "key": "_10",
+                            "title": "$ip=10.0.0.11"
+                        },
+                        {
+                            "key": "_11",
+                            "title": "$trunk=47-48"
+                        }
+                    ],
+                    "folder": true,
+                    "key": "_7",
+                    "title": "sw2_48p"
+                }
+            ],
+            "expanded": true,
+            "folder": true,
+            "key": "_1",
+            "title": "All Assets"
+        }
+    ],
+    "expanded": true,
+    "key": "root_1",
+    "title": "root"
+}
