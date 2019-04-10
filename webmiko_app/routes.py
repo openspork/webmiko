@@ -25,8 +25,16 @@ def test_message(message):
 
     # Dump each asset to DB
     for child in children:
-        print(child.get('title'))
+        name = child.get('title')
+        device = Device.create(name = name)
+        var_defs = child.get('children')
+        for var_def in var_defs:
+            for key, value in var_def.items():
+                DeviceVar.create(device = device, key = key, value = value)
+
         
+
+
 
 
 

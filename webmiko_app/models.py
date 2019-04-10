@@ -7,23 +7,17 @@ class BaseModel(Model):
         database = db
 
 class Var(BaseModel):
-    key = CharField(unique=True)
+    key = CharField()
     value = CharField()
 
 class GlobalVar(Var):
     global_var = ForeignKeyField(BaseModel, backref = 'vars')
 
-
 class Device(BaseModel):
-    dev_type = CharField()
-    ip_addr = CharField()
-    username = CharField()
-    password = CharField()
+    name = CharField()
 
 class DeviceVar(Var):
-    device_var = ForeignKeyField(Device, backref = 'device_vars')
-    key = CharField(unique=True)
-    value = CharField()
+    device = ForeignKeyField(Device, backref = 'device_vars')
 
 class LiveCommand(BaseModel):
     command = CharField()
