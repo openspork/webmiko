@@ -56,10 +56,4 @@ $(document).ready(function() {
         allAssetNode = $("#tree").fancytree('getNodeByKey','_1');
         allAssetNode.addChildren(newDevice);
     });
-
-
-
-
-
-
 });
