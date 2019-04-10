@@ -3,9 +3,12 @@ from time import mktime
 from datetime import datetime, timezone
 from flask import render_template, send_from_directory
 from flask_socketio import emit, join_room, leave_room, close_room, rooms, disconnect
+from json import dumps, loads
 
 from webmiko_app import app, socketio
 from utils.utils import js_hashcode
+
+from webmiko_app.models import Var, GlobalVar, Device, DeviceVar, LiveCommand, FavCommand
 
 
 thread = None
@@ -15,7 +18,22 @@ thread_lock = Lock()
 @socketio.on('inventory', namespace='/test')
 def test_message(message):
     print('Inventory received!')
-    print(message['data'])
+    payload = message['data']
+
+    # Unpack the outer layers of the package to get to the children (assets) we care about
+    children = payload.get('children')[0].get('children')
+
+    # Dump each asset to DB
+    for child in children:
+        print(child.get('title'))
+        
+
+
+
+    
+
+
+
     emit('inventory', {'data': 'success'})
 
 # Process query submission
