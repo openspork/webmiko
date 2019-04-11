@@ -46,7 +46,7 @@ $(document).ready(function() {
         select: function(event, data) {
             var node = data.node;
             selected = node.isSelected(); // Get the selected state of the selected node
-            node.visit(function(childNode) {
+            node.visit(function(childNode){
                 childNode.setSelected(selected); // apply the selected state to all children
             });
         }
@@ -56,4 +56,18 @@ $(document).ready(function() {
         allAssetNode = $("#tree").fancytree('getNodeByKey','_1');
         allAssetNode.addChildren(newDevice);
     });
+
+    $("#del_tree_node_button").click(function(event){
+        var tree = $("#tree").fancytree("getTree"),
+        node = tree.getActiveNode();
+        searchIDs = tree.getSelectedNodes();
+
+        searchIDs.forEach(function(node){
+            children = node.children;
+            if (children !== null){
+                node.remove(children,node.getNextSibling());
+            }
+        });
+    });
+
 });
