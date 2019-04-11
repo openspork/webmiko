@@ -60,12 +60,14 @@ $(document).ready(function() {
 
     $("#add_tree_dev_button").click(function(event){
         allAssetNode = $("#tree").fancytree('getNodeByKey','_1');
-        allAssetNode.addChildren(newDevice);
+        console.log(allAssetNode);
+        allAssetNode.addNode(newDevice,'child');
     });
 
     $("#add_tree_var_button").click(function(event){
-        allAssetNode = $("#tree").fancytree('getNodeByKey','_1');
-        allAssetNode.addChildren(newVar);
+        allAssetNode = $("#tree").fancytree('getRootNode');
+        console.log(allAssetNode)
+        //allAssetNode.addChildren(newVar);
     });    
 
     $("#del_tree_node_button").click(function(event){
@@ -76,16 +78,16 @@ $(document).ready(function() {
             children = node.children;
             // If the selected node has un-selected children, move them to the parent
             if (children !== null){
-                node.parent.addChildren(children,0)
+                node.parent.addChildren(children,0);
                 // Finally remove the node itself
-                node.remove()
+                node.remove();
             }
         });
         // Need to run a second pass to get remaining
         // There is a more elegant, and less complex way to this, this is quick and dirty
         selectedNodes = tree.getSelectedNodes();
         selectedNodes.forEach(function(node){
-            node.remove()
+            node.remove();
         });
     });
 });
