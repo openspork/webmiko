@@ -15,16 +15,22 @@ data = [
     ]}
 ]
 
-// Blank node
-      var newDevice = [
-        { title: "device_name", folder: true,
-          children: [
-            { title: "$password=" },
-            { title: "$user="},
-            { title: "$ip="},
-            { title: "$trunk=48" }
-          ]}
-      ];
+// Blank device
+var newDevice = [
+{ title: "device_name", folder: true,
+  children: [
+    { title: "$password=" },
+    { title: "$user="},
+    { title: "$ip="},
+    { title: "$trunk=48" }
+  ]}
+];
+
+// Blank variable
+var newVar = [{
+    title: "$variable=value",
+    folder: false
+}];
 
 $(document).ready(function() {
     $("#tree").fancytree({
@@ -52,22 +58,34 @@ $(document).ready(function() {
         }
     });
 
-    $("#add_tree_node_button").click(function(event){
+    $("#add_tree_dev_button").click(function(event){
         allAssetNode = $("#tree").fancytree('getNodeByKey','_1');
         allAssetNode.addChildren(newDevice);
     });
 
+    $("#add_tree_var_button").click(function(event){
+        allAssetNode = $("#tree").fancytree('getNodeByKey','_1');
+        allAssetNode.addChildren(newVar);
+    });    
+
     $("#del_tree_node_button").click(function(event){
         var tree = $("#tree").fancytree("getTree"),
         node = tree.getActiveNode();
-        searchIDs = tree.getSelectedNodes();
-
-        searchIDs.forEach(function(node){
+        selectedNodes = tree.getSelectedNodes();
+        selectedNodes.forEach(function(node){
             children = node.children;
+            // If the selected node has un-selected children, move them to the parent
             if (children !== null){
-                node.remove(children,node.getNextSibling());
+                node.parent.addChildren(children,0)
+                // Finally remove the node itself
+                node.remove()
             }
         });
+        // Need to run a second pass to get remaining
+        // There is a more elegant, and less complex way to this, this is quick and dirty
+        selectedNodes = tree.getSelectedNodes();
+        selectedNodes.forEach(function(node){
+            node.remove()
+        });
     });
-
 });
